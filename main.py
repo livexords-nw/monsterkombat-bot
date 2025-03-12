@@ -3,8 +3,6 @@ import json
 import time
 from colorama import Fore
 import requests
-import re
-import urllib.parse
 
 
 class monsterkombat:
@@ -24,7 +22,7 @@ class monsterkombat:
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "same-site",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36" 
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
     }
 
     def __init__(self):
@@ -110,7 +108,10 @@ class monsterkombat:
         token = self.query_list[index]
         parts = token.split("|")
         if len(parts) < 3:
-            self.log("❌ Token format is incorrect. Expected format: signature|address|timestamp", Fore.RED)
+            self.log(
+                "❌ Token format is incorrect. Expected format: signature|address|timestamp",
+                Fore.RED,
+            )
             return
 
         signature = parts[0]
@@ -122,13 +123,15 @@ class monsterkombat:
             "message": f"Login to the app. Connect time: {timestamp}",
             "signature": signature,
             "address": address,
-            "refCode": "Y7zsu4qH"
+            "refCode": "Y7zsu4qH",
         }
 
         sign_in_url = f"{self.BASE_URL}auth/sign-in"
         try:
             self.log("🔒 Attempting to sign in...", Fore.GREEN)
-            sign_in_response = requests.post(sign_in_url, headers=self.HEADERS, json=payload)
+            sign_in_response = requests.post(
+                sign_in_url, headers=self.HEADERS, json=payload
+            )
             sign_in_response.raise_for_status()
             sign_in_data = sign_in_response.json()
 
@@ -154,14 +157,34 @@ class monsterkombat:
             if user_info_data:
                 self.log("✅ Account info fetched successfully!", Fore.GREEN)
                 # Tampilkan informasi penting agar user lebih mudah mengetahui akunnya
-                self.log(f"👤 Username: {user_info_data.get('username', 'Unknown')}", Fore.CYAN)
-                self.log(f"🆔 User ID: {user_info_data.get('_id', 'Unknown')}", Fore.CYAN)
-                self.log(f"📍 Address: {user_info_data.get('address', 'Unknown')}", Fore.CYAN)
-                self.log(f"⭐ Level: {user_info_data.get('level', 'Unknown')}", Fore.CYAN)
-                self.log(f"🏷 Referral Code: {user_info_data.get('referralCode', 'Unknown')}", Fore.CYAN)
-                self.log(f"💰 Token Balance: {user_info_data.get('token_balance', 'Unknown')}", Fore.CYAN)
-                self.log(f"💎 Gem Balance: {user_info_data.get('gem_balance', 'Unknown')}", Fore.CYAN)
-                self.log(f"⚡ Power: {user_info_data.get('power', 'Unknown')}", Fore.CYAN)
+                self.log(
+                    f"👤 Username: {user_info_data.get('username', 'Unknown')}",
+                    Fore.CYAN,
+                )
+                self.log(
+                    f"🆔 User ID: {user_info_data.get('_id', 'Unknown')}", Fore.CYAN
+                )
+                self.log(
+                    f"📍 Address: {user_info_data.get('address', 'Unknown')}", Fore.CYAN
+                )
+                self.log(
+                    f"⭐ Level: {user_info_data.get('level', 'Unknown')}", Fore.CYAN
+                )
+                self.log(
+                    f"🏷 Referral Code: {user_info_data.get('referralCode', 'Unknown')}",
+                    Fore.CYAN,
+                )
+                self.log(
+                    f"💰 Token Balance: {user_info_data.get('token_balance', 'Unknown')}",
+                    Fore.CYAN,
+                )
+                self.log(
+                    f"💎 Gem Balance: {user_info_data.get('gem_balance', 'Unknown')}",
+                    Fore.CYAN,
+                )
+                self.log(
+                    f"⚡ Power: {user_info_data.get('power', 'Unknown')}", Fore.CYAN
+                )
             else:
                 self.log("❌ Failed to fetch account info: Empty response", Fore.RED)
 
@@ -230,7 +253,9 @@ class monsterkombat:
             current_collect = task_item.get("current_collect", 0)
             mission_target = task_item.get("mission_target", 0)
 
-            self.log(f"🚀 Processing Mission: {mission_code} - {mission_name}", Fore.CYAN)
+            self.log(
+                f"🚀 Processing Mission: {mission_code} - {mission_name}", Fore.CYAN
+            )
             if is_claim:
                 self.log(f"ℹ️ Mission {mission_code} is already claimed.", Fore.YELLOW)
                 continue
@@ -242,7 +267,9 @@ class monsterkombat:
                 update_response.raise_for_status()
                 update_result = update_response.json()
                 if update_result.get("status") == 200:
-                    self.log(f"👍 Mission progress updated for {mission_code}.", Fore.GREEN)
+                    self.log(
+                        f"👍 Mission progress updated for {mission_code}.", Fore.GREEN
+                    )
                 else:
                     self.log(
                         f"❌ Update progress failed for Mission {mission_code}: {update_result.get('message')}",
@@ -250,7 +277,10 @@ class monsterkombat:
                     )
                     continue
             except Exception as e:
-                self.log(f"❌ Request error during update progress for Mission {mission_code}: {e}", Fore.RED)
+                self.log(
+                    f"❌ Request error during update progress for Mission {mission_code}: {e}",
+                    Fore.RED,
+                )
                 continue
 
             # 2. Claim Mission Reward (POST, tanpa payload)
@@ -270,12 +300,17 @@ class monsterkombat:
                         Fore.RED,
                     )
             except Exception as e:
-                self.log(f"❌ Request error during claim mission reward for Mission {mission_code}: {e}", Fore.RED)
+                self.log(
+                    f"❌ Request error during claim mission reward for Mission {mission_code}: {e}",
+                    Fore.RED,
+                )
                 continue
 
-            self.log("⏳ Waiting 2 seconds before processing the next mission...", Fore.BLUE)
+            self.log(
+                "⏳ Waiting 2 seconds before processing the next mission...", Fore.BLUE
+            )
             time.sleep(2)
-        
+
     def fight(self) -> None:
         headers = {**self.HEADERS, "Authorization": f"Bearer {self.token}"}
         self.log("📡 Starting battle loop...", Fore.CYAN)
@@ -317,7 +352,10 @@ class monsterkombat:
 
             # If no eligible monsters, try upgrading a pet
             if not eligible_monsters:
-                self.log("ℹ️ No monsters with win rate > 50% found. Attempting to upgrade pet...", Fore.YELLOW)
+                self.log(
+                    "ℹ️ No monsters with win rate > 50% found. Attempting to upgrade pet...",
+                    Fore.YELLOW,
+                )
                 pets_data = fetch_pets()
                 if not pets_data:
                     break
@@ -330,7 +368,10 @@ class monsterkombat:
                 best_pet = max(pet_items, key=lambda pet: pet.get("power", 0))
                 pet_id = best_pet.get("_id")
                 current_level = best_pet.get("level", 0)
-                self.log(f"👾 Best pet: {best_pet.get('name')} (Power: {best_pet.get('power')}, Level: {current_level})", Fore.CYAN)
+                self.log(
+                    f"👾 Best pet: {best_pet.get('name')} (Power: {best_pet.get('power')}, Level: {current_level})",
+                    Fore.CYAN,
+                )
 
                 # Attempt to upgrade the pet via the level-up API
                 upgrade_url = f"{self.BASE_URL}pokemons/{pet_id}/level-up"
@@ -340,9 +381,15 @@ class monsterkombat:
                     upgrade_result = upgrade_resp.json()
                     new_level = upgrade_result.get("level")
                     if new_level and new_level > current_level:
-                        self.log(f"👍 Pet upgraded successfully to level {new_level}.", Fore.GREEN)
+                        self.log(
+                            f"👍 Pet upgraded successfully to level {new_level}.",
+                            Fore.GREEN,
+                        )
                     else:
-                        self.log("❌ Pet upgrade did not increase level. Attempting to refresh monsters...", Fore.YELLOW)
+                        self.log(
+                            "❌ Pet upgrade did not increase level. Attempting to refresh monsters...",
+                            Fore.YELLOW,
+                        )
                         # If upgrade fails to improve level, refresh monsters
                         refresh_url = f"{self.BASE_URL}battles/monsters/refresh"
                         try:
@@ -370,16 +417,26 @@ class monsterkombat:
                 if not monsters_data:
                     break
                 monsters_list = monsters_data.get("monster", {}).get("monsters", [])
-                eligible_monsters = [m for m in monsters_list if m.get("win_rate", 0) > 50]
+                eligible_monsters = [
+                    m for m in monsters_list if m.get("win_rate", 0) > 50
+                ]
                 # If still no eligible monsters, exit the loop
                 if not eligible_monsters:
-                    self.log("ℹ️ No eligible monsters after upgrade/refresh. Exiting battle loop.", Fore.YELLOW)
+                    self.log(
+                        "ℹ️ No eligible monsters after upgrade/refresh. Exiting battle loop.",
+                        Fore.YELLOW,
+                    )
                     break
 
             # If eligible monsters exist, select the one with the highest win_rate
-            selected_monster = max(eligible_monsters, key=lambda m: m.get("win_rate", 0))
+            selected_monster = max(
+                eligible_monsters, key=lambda m: m.get("win_rate", 0)
+            )
             monster_win_rate = selected_monster.get("win_rate")
-            self.log(f"🎯 Selected Monster: {selected_monster.get('monster')} with win rate {monster_win_rate}%", Fore.CYAN)
+            self.log(
+                f"🎯 Selected Monster: {selected_monster.get('monster')} with win rate {monster_win_rate}%",
+                Fore.CYAN,
+            )
 
             # Fetch pet data again to choose the best available pet for battle
             pets_data = fetch_pets()
@@ -391,24 +448,30 @@ class monsterkombat:
                 break
 
             # Filter pets that have battles_remaining > 0
-            available_pets = [pet for pet in pet_items if pet.get("battles_remaining", 0) > 0]
+            available_pets = [
+                pet for pet in pet_items if pet.get("battles_remaining", 0) > 0
+            ]
             if not available_pets:
-                self.log("ℹ️ No pets with remaining battles. Exiting fight.", Fore.YELLOW)
+                self.log(
+                    "ℹ️ No pets with remaining battles. Exiting fight.", Fore.YELLOW
+                )
                 return
 
             # Select the best pet based on power
             best_pet = max(available_pets, key=lambda pet: pet.get("power", 0))
             pet_id = best_pet.get("_id")
-            self.log(f"👾 Selected Pokemon for fight: {best_pet.get('name')} (Power: {best_pet.get('power')}, Battles remaining: {best_pet.get('battles_remaining')})", Fore.CYAN)
+            self.log(
+                f"👾 Selected Pokemon for fight: {best_pet.get('name')} (Power: {best_pet.get('power')}, Battles remaining: {best_pet.get('battles_remaining')})",
+                Fore.CYAN,
+            )
 
             # Execute the fight by calling the battles/fight API
             fight_url = f"{self.BASE_URL}battles/fight"
-            fight_payload = {
-                "monsterWinRate": monster_win_rate,
-                "pokemonIds": [pet_id]
-            }
+            fight_payload = {"monsterWinRate": monster_win_rate, "pokemonIds": [pet_id]}
             try:
-                fight_resp = requests.post(fight_url, headers=headers, json=fight_payload)
+                fight_resp = requests.post(
+                    fight_url, headers=headers, json=fight_payload
+                )
                 fight_resp.raise_for_status()
                 fight_result = fight_resp.json()
                 self.log("⚔️ Fight executed successfully.", Fore.GREEN)
@@ -428,7 +491,9 @@ class monsterkombat:
             # After the fight, refresh the monster list to update data
             self.log("🔄 Refreshing monster list after fight...", Fore.CYAN)
             try:
-                refresh_resp = requests.get(f"{self.BASE_URL}battles/monsters", headers=headers)
+                refresh_resp = requests.get(
+                    f"{self.BASE_URL}battles/monsters", headers=headers
+                )
                 refresh_resp.raise_for_status()
                 self.log("🔄 Monster list refreshed.", Fore.GREEN)
             except Exception as e:
@@ -437,7 +502,7 @@ class monsterkombat:
 
             self.log("⏳ Waiting 2 seconds before next battle...", Fore.BLUE)
             time.sleep(2)
-        
+
     def load_proxies(self, filename="proxy.txt"):
         """
         Reads proxies from a file and returns them as a list.
@@ -536,7 +601,8 @@ if __name__ == "__main__":
         proxies = monster.load_proxies()
 
     monster.log(
-        "🎉 [LIVEXORDS] === Welcome to Monster Kombat Automation === [LIVEXORDS]", Fore.YELLOW
+        "🎉 [LIVEXORDS] === Welcome to Monster Kombat Automation === [LIVEXORDS]",
+        Fore.YELLOW,
     )
     monster.log(f"📂 Loaded {max_index} accounts from query list.", Fore.YELLOW)
 
@@ -563,7 +629,7 @@ if __name__ == "__main__":
         monster.log("🛠️ Starting task execution...")
         tasks = {
             "task": "Automatically solving tasks 🤖",
-            "fight": "Auto Fight ⚔️ - Engage in epic battles with your best monsters and pets for awesome rewards! 🔥🏆"
+            "fight": "Auto Fight ⚔️ - Engage in epic battles with your best monsters and pets for awesome rewards! 🔥🏆",
         }
 
         for task_key, task_name in tasks.items():
