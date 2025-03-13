@@ -10,20 +10,21 @@
 
 The Monster Kombat Bot is designed to automate various tasks in **Monster Kombat**, including:
 
-- **Auto Task:** Automatically solving tasks 🤖
+- **Auto Task:** Automatically solve tasks 🤖
 - **Auto Fight:** Engage in epic battles automatically! ⚔️🔥🏆  
-  _(This feature also integrates auto upgrade pet functionality for improved performance.)_
+  _(This feature also integrates auto-upgrade pet functionality for improved performance.)_
 
 With this bot, you can save time and maximize your outcomes without manual intervention.
 
 ---
 
-## 🌟 Version v1.0.0
+## 🌟 Version v1.1.0
 
 ### Updates
 
-- **Initial Release:**  
-  Welcome to the initial release of Monster Kombat Bot. This version brings you the core automation features along with multi-account and proxy support to optimize your gameplay.
+- **Extension Update:**  
+  Added a Violent Monkey extension for capturing the query directly from the website.  
+  _Note:_ This notepad extension works only within the Violent Monkey environment.
 
 ### Future Updates
 
@@ -39,10 +40,14 @@ With this bot, you can save time and maximize your outcomes without manual inter
 ### **Features in This Version:**
 
 - **Auto Task:** Automatically solve tasks 🤖
-- **Auto Fight:** Automatically engage in battles (includes auto upgrade pet) ⚔️🔥🏆
+- **Auto Fight:** Automatically engage in battles (includes auto-upgrade pet) ⚔️🔥🏆
 - **Multi-Account Support:** Manage multiple accounts simultaneously.
 - **Proxy Support:** Dynamically assign proxies to different accounts.
 - **Delay Loop and Account Switching:** Set custom delays for looping tasks and switching between accounts.
+- **Violent Monkey Extension:**  
+  Capture the query directly from the website and save it as `signature|address|timestamp`.  
+  _(This extension works only with Violent Monkey)_  
+  **Zip file:** monester_kombat_extension_query.zip
 
 ---
 
@@ -52,8 +57,8 @@ Below is the configuration table for the Monster Kombat Bot:
 
 | **Function**           | **Description**                             | **Default** |
 | ---------------------- | ------------------------------------------- | ----------- |
-| `task`                 | Automatically solving tasks                 | `true`      |
-| `fight`                | Auto Fight (includes auto upgrade pet)      | `true`      |
+| `task`                 | Automatically solve tasks                   | `true`      |
+| `fight`                | Auto Fight (includes auto-upgrade pet)      | `true`      |
 | `delay_account_switch` | Delay between account switches (in seconds) | `10`        |
 | `delay_loop`           | Delay before the next loop (in seconds)     | `3000`      |
 
