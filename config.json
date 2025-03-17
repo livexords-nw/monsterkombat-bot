@@ -2,6 +2,7 @@
     "fight": true,
     "task": true,
     "run_reff": false,
+    "proxy": false,
     "delay_account_switch": 10,
     "delay_loop": 3000
 }
