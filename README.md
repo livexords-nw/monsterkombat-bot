@@ -183,6 +183,12 @@ And here is a sample `config_reff.json`:
 2. **Set Up Referral Links:**  
    Create a file named `query_reff.txt` and add your referral links. You can include multiple links.
 
+   **Example:**
+   ```bash
+   https://game.monsterkombat.io/?ref=Y7zsu4qH
+   https://game.monsterkombat.io/?ref=Y7zsu4qH
+   ```
+
 3. **Configure the Auto Reff Settings:**  
    Create or update the `config_reff.json` file with the parameters shown above.
 

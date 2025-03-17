@@ -20,16 +20,16 @@ class MonsterKombatReff:
             "put": requests.put,
             "delete": requests.delete,
         }
+        self.banner()
         self.config = self.load_config()  # load configuration from config_ref.json
         self.proxy_session = None
         # Override requests if proxy is enabled in configuration
         if self.config.get("proxy", False):
             self.override_requests()
-        self.banner()
         # Load referral codes from query_reff.txt (each line is a URL)
         self.ref_codes = self.load_query("query_reff.txt")
         if not self.ref_codes:
-            self.log("⚠️ No referral codes found! Please check query_reff.txt.", Fore.RED)
+            self.log("⚠️ No referral codes found! Please check query_reff.txt", Fore.RED)
 
     def banner(self) -> None:
         """Displays the banner for the bot."""
@@ -55,15 +55,15 @@ class MonsterKombatReff:
             dict: Configuration data or an empty dictionary if an error occurs.
         """
         try:
-            with open("config_ref.json", "r") as config_file:
+            with open("config_reff.json", "r") as config_file:
                 config = json.load(config_file)
                 self.log("✅ Configuration loaded successfully.", Fore.GREEN)
                 return config
         except FileNotFoundError:
-            self.log("❌ File not found: config_ref.json", Fore.RED)
+            self.log("❌ File not found: config_reff.json", Fore.RED)
             return {}
         except json.JSONDecodeError:
-            self.log("❌ Failed to parse config_ref.json. Please check the file format.", Fore.RED)
+            self.log("❌ Failed to parse config_reff.json . Please check the file format.", Fore.RED)
             return {}
 
     def load_query(self, path_file: str = "query_reff.txt") -> list:
