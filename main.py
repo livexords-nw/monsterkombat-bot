@@ -3,6 +3,7 @@ import json
 import time
 from colorama import Fore
 import requests
+import random
 
 
 class monsterkombat:
