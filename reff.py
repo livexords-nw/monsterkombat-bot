@@ -55,15 +55,15 @@ class MonsterKombatReff:
             dict: Configuration data or an empty dictionary if an error occurs.
         """
         try:
-            with open("config_ref.json", "r") as config_file:
+            with open("config_reff.json", "r") as config_file:
                 config = json.load(config_file)
                 self.log("✅ Configuration loaded successfully.", Fore.GREEN)
                 return config
         except FileNotFoundError:
-            self.log("❌ File not found: config_ref.json", Fore.RED)
+            self.log("❌ File not found: config_reff.json", Fore.RED)
             return {}
         except json.JSONDecodeError:
-            self.log("❌ Failed to parse config_ref.json. Please check the file format.", Fore.RED)
+            self.log("❌ Failed to parse config_reff.json. Please check the file format.", Fore.RED)
             return {}
 
     def load_query(self, path_file: str = "query_reff.txt") -> list:
