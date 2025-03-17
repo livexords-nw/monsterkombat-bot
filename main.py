@@ -26,9 +26,12 @@ class monsterkombat:
     }
 
     def __init__(self):
-        self.query_list = self.load_query("query.txt")
-        self.token = None
         self.config = self.load_config()
+        if self.config.get("run_reff", False):
+            self.query_list = self.load_query("result_reff.txt")
+        else:
+            self.query_list = self.load_query("query.txt")
+        self.token = None
 
     def banner(self) -> None:
         """Displays the banner for the bot."""

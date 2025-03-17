@@ -24,7 +24,7 @@ With this bot, you can save time and maximize your outcomes without manual inter
 
 - **Extension Update:**  
   Added a Violent Monkey extension for capturing the query directly from the website.  
-  _Note:_ This notepad extension works only within the Violent Monkey environment.
+  _Note:_ This extension works only within the Violent Monkey environment.
 
 ### Future Updates
 
@@ -46,8 +46,8 @@ With this bot, you can save time and maximize your outcomes without manual inter
 - **Delay Loop and Account Switching:** Set custom delays for looping tasks and switching between accounts.
 - **Violent Monkey Extension:**  
   Capture the query directly from the website and save it as `signature|address|timestamp`.  
-  _(This extension works only with Violent Monkey)_  
-  **Zip file:** monester_kombat_extension_query.zip
+  _Note:_ This extension works only with Violent Monkey.  
+  **Zip file:** `monester_kombat_extension_query.zip`
 
 ---
 
@@ -98,34 +98,86 @@ And here is a sample `config.json`:
    pip install -r requirements.txt
    ```
 
-4. **Configure Query**  
-   Create a `query.txt` file and add your Monster Kombat query data.  
+---
+
+## 🔍 **Configure Query**
+
+1. **Create a Query File:**  
+   Create a file named `query.txt` and add your Monster Kombat query data.  
    **Query format:**
 
    ```
    signature|address|timestamp
    ```
 
-   **How to obtain your query:**  
+2. **How to Obtain Your Query:**  
    You can find this query by inspecting the website. Open your browser's Developer Tools, navigate to the **Network** tab, log in, and look for an API call named **sign-in**. Then, check its payload to copy the required query information.
 
-   ![Query Example](query_xample.jpg)
+   **Note:**  
+   To make this process easier, please use my extension provided in the zip file **`monster_kombat_extension_query.zip`**. This extension will automatically capture the query from the website.
 
-5. **Set Up Proxy (Optional)**  
-   To use a proxy, create a `proxy.txt` file and add proxies in the following format:
+---
 
-   ```
-   http://username:password@ip:port
-   ```
+## 💻 **Tutorial: Install the Extension**
 
-   - Only HTTP and HTTPS proxies are supported.
+1. **Download the Extension:**  
+   Download the zip file `monster_kombat_extension_query.zip` from this repository.  
+   ![Download Image](download_placeholder.jpg)
 
-6. **Run the Bot**  
-   Execute the bot using the following command:
+2. **Install Violent Monkey Extension:**  
+   Install the Violent Monkey extension in your browser using [this link](https://violentmonkey.github.io/get-it/).
+
+3. **Import the Zip File:**  
+   Open Violent Monkey, go to **Settings** → **Import from Zip**, and select the downloaded zip file.  
+   ![Import Zip Image](import_placeholder.jpg)
+
+4. **Activate the Extension on Monster Kombat Website:**  
+   Open the Monster Kombat website. If you are still logged in, please log out and log in again to ensure the extension is active.  
+   Make sure the extension is working correctly as shown below:  
+   ![Extension Active Image](extension_active_placeholder.jpg)
+
+5. **Capture and Copy the Query:**  
+   Once logged in, click **Format & Copy** on the extension.  
+   Then, paste the copied result into your `query.txt` file.
+
+---
+
+## ⚙️ **Tutorial: Running the Auto Reff Script**
+
+1. **Install Dependencies:**  
+   Ensure you have installed all required libraries:
 
    ```bash
-   python main.py
+   pip install -r requirements.txt
    ```
+
+2. **Set Up Referral Links:**  
+   Create a file named `query_reff.txt` and add your referral links. You can include multiple links.
+
+3. **Configure the Auto Reff Settings:**  
+   Create or update the `config_reff.json` file with the following parameters:
+
+   ```json
+   {
+     "proxy": true,
+     "countGenerate": 20,
+     "delayperGenerate": 3
+   }
+   ```
+
+   - **proxy:** Set to `true` to use proxy. Ensure that the `proxy.txt` file is available if enabled.
+   - **countGenerate:** Number of accounts to generate per referral link.
+   - **delayperGenerate:** Delay (in seconds) after each account generation.
+
+4. **Run the Auto Reff Script:**  
+   Execute the script with the following command:
+
+   ```bash
+   python reff.py
+   ```
+
+5. **Optional - Run Referral Accounts in Main Script:**  
+   If you wish to use the generated referral accounts in your main script, enable the feature `run_reff` by setting it to `true` in your configuration. This will trigger the execution of referral accounts automatically.
 
 ---
 

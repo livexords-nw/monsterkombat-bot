@@ -1,0 +1,5 @@
+{
+    "proxy": false,
+    "countGenerate": 20,
+    "delayperGenerate": 3
+}
